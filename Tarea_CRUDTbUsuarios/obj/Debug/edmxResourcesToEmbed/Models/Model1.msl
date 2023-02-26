@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_USUARIOSModelStoreContainer" CdmEntityContainer="DB_USUARIOSEntities">
+    <EntitySetMapping Name="tbUsuarios">
+      <EntityTypeMapping TypeName="DB_USUARIOSModel.tbUsuarios">
+        <MappingFragment StoreEntitySet="tbUsuarios">
+          <ScalarProperty Name="usu_Id" ColumnName="usu_Id" />
+          <ScalarProperty Name="usu_Nambe" ColumnName="usu_Nambe" />
+          <ScalarProperty Name="usu_Apellido" ColumnName="usu_Apellido" />
+          <ScalarProperty Name="usu_UsuarioAlias" ColumnName="usu_UsuarioAlias" />
+          <ScalarProperty Name="usu_Contra" ColumnName="usu_Contra" />
+          <ScalarProperty Name="usu_EsAdmin" ColumnName="usu_EsAdmin" />
+          <ScalarProperty Name="usu_UsuCrea" ColumnName="usu_UsuCrea" />
+          <ScalarProperty Name="usu_FechaCrea" ColumnName="usu_FechaCrea" />
+          <ScalarProperty Name="usu_UsuModif" ColumnName="usu_UsuModif" />
+          <ScalarProperty Name="usu_FechaModif" ColumnName="usu_FechaModif" />
+          <ScalarProperty Name="usu_Estado" ColumnName="usu_Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="V_USARIOS_INDEX">
+      <EntityTypeMapping TypeName="DB_USUARIOSModel.V_USARIOS_INDEX">
+        <MappingFragment StoreEntitySet="V_USARIOS_INDEX">
+          <ScalarProperty Name="usu_Id" ColumnName="usu_Id" />
+          <ScalarProperty Name="usu_Nambe" ColumnName="usu_Nambe" />
+          <ScalarProperty Name="usu_Apellido" ColumnName="usu_Apellido" />
+          <ScalarProperty Name="usu_UsuarioAlias" ColumnName="usu_UsuarioAlias" />
+          <ScalarProperty Name="usu_EsAdmin" ColumnName="usu_EsAdmin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UDP_USUARIOS_INSERT" FunctionName="DB_USUARIOSModel.Store.UDP_USUARIOS_INSERT" />
+    <FunctionImportMapping FunctionImportName="UDP_VALIDAR_LOGIN" FunctionName="DB_USUARIOSModel.Store.UDP_VALIDAR_LOGIN">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DB_USUARIOSModel.UDP_VALIDAR_LOGIN_Result">
+          <ScalarProperty Name="usu_Id" ColumnName="usu_Id" />
+          <ScalarProperty Name="usu_UsuarioAlias" ColumnName="usu_UsuarioAlias" />
+          <ScalarProperty Name="usu_Contra" ColumnName="usu_Contra" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UDP_EDITAR_USUARIOS" FunctionName="DB_USUARIOSModel.Store.UDP_EDITAR_USUARIOS" />
+    <FunctionImportMapping FunctionImportName="UDP_ELIMINAR" FunctionName="DB_USUARIOSModel.Store.UDP_ELIMINAR" />
+  </EntityContainerMapping>
+</Mapping>

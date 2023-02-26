@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_USUARIOSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbUsuarios">
+    <Key>
+      <PropertyRef Name="usu_Id" />
+    </Key>
+    <Property Name="usu_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usu_Nambe" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="usu_Apellido" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="usu_UsuarioAlias" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="usu_Contra" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="usu_EsAdmin" Type="bit" Nullable="false" />
+    <Property Name="usu_UsuCrea" Type="int" Nullable="false" />
+    <Property Name="usu_FechaCrea" Type="datetime" Nullable="false" />
+    <Property Name="usu_UsuModif" Type="int" />
+    <Property Name="usu_FechaModif" Type="datetime" />
+    <Property Name="usu_Estado" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_USUARIOS1.dbo.V_USARIOS_INDEX' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="V_USARIOS_INDEX">
+    <Key>
+      <PropertyRef Name="usu_Id" />
+      <PropertyRef Name="usu_Nambe" />
+      <PropertyRef Name="usu_Apellido" />
+      <PropertyRef Name="usu_UsuarioAlias" />
+      <PropertyRef Name="usu_EsAdmin" />
+    </Key>
+    <Property Name="usu_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usu_Nambe" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="usu_Apellido" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="usu_UsuarioAlias" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="usu_EsAdmin" Type="varchar" MaxLength="9" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tbUsuarios_usuCrea">
+    <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="1" />
+    <End Role="tbUsuarios1" Type="Self.tbUsuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbUsuarios">
+        <PropertyRef Name="usu_Id" />
+      </Principal>
+      <Dependent Role="tbUsuarios1">
+        <PropertyRef Name="usu_UsuCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbUsuarios_usuModif">
+    <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="0..1" />
+    <End Role="tbUsuarios1" Type="Self.tbUsuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbUsuarios">
+        <PropertyRef Name="usu_Id" />
+      </Principal>
+      <Dependent Role="tbUsuarios1">
+        <PropertyRef Name="usu_UsuModif" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="UDP_EDITAR_USUARIOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usu_Id" Type="int" Mode="In" />
+    <Parameter Name="usu_Nambe" Type="nvarchar" Mode="In" />
+    <Parameter Name="usu_Apellido" Type="nvarchar" Mode="In" />
+    <Parameter Name="usu_UsuarioAlias" Type="nvarchar" Mode="In" />
+    <Parameter Name="usu_EsAdmin" Type="bit" Mode="In" />
+    <Parameter Name="usu_UsuModif" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UDP_ELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usu_Id" Type="int" Mode="In" />
+    <Parameter Name="usu_Modi" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UDP_USUARIOS_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usu_Nambe" Type="nvarchar" Mode="In" />
+    <Parameter Name="usu_Apellido" Type="nvarchar" Mode="In" />
+    <Parameter Name="usu_UsuarioAlias" Type="nvarchar" Mode="In" />
+    <Parameter Name="usu_Contra" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="usu_EsAdmin" Type="bit" Mode="In" />
+    <Parameter Name="usu_UsuCrea" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UDP_VALIDAR_LOGIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usu_Alias" Type="nvarchar" Mode="In" />
+    <Parameter Name="usu_Contra" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <EntityContainer Name="DB_USUARIOSModelStoreContainer">
+    <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="V_USARIOS_INDEX" EntityType="Self.V_USARIOS_INDEX" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [V_USARIOS_INDEX].[usu_Id] AS [usu_Id], 
+    [V_USARIOS_INDEX].[usu_Nambe] AS [usu_Nambe], 
+    [V_USARIOS_INDEX].[usu_Apellido] AS [usu_Apellido], 
+    [V_USARIOS_INDEX].[usu_UsuarioAlias] AS [usu_UsuarioAlias], 
+    [V_USARIOS_INDEX].[usu_EsAdmin] AS [usu_EsAdmin]
+    FROM [dbo].[V_USARIOS_INDEX] AS [V_USARIOS_INDEX]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_tbUsuarios_usuCrea" Association="Self.FK_tbUsuarios_usuCrea">
+      <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+      <End Role="tbUsuarios1" EntitySet="tbUsuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbUsuarios_usuModif" Association="Self.FK_tbUsuarios_usuModif">
+      <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+      <End Role="tbUsuarios1" EntitySet="tbUsuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

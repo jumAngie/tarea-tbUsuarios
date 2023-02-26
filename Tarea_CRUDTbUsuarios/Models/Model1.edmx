@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_USUARIOSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbUsuarios">
+          <Key>
+            <PropertyRef Name="usu_Id" />
+          </Key>
+          <Property Name="usu_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usu_Nambe" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="usu_Apellido" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="usu_UsuarioAlias" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="usu_Contra" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="usu_EsAdmin" Type="bit" Nullable="false" />
+          <Property Name="usu_UsuCrea" Type="int" Nullable="false" />
+          <Property Name="usu_FechaCrea" Type="datetime" Nullable="false" />
+          <Property Name="usu_UsuModif" Type="int" />
+          <Property Name="usu_FechaModif" Type="datetime" />
+          <Property Name="usu_Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_USUARIOS1.dbo.V_USARIOS_INDEX' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="V_USARIOS_INDEX">
+          <Key>
+            <PropertyRef Name="usu_Id" />
+            <PropertyRef Name="usu_Nambe" />
+            <PropertyRef Name="usu_Apellido" />
+            <PropertyRef Name="usu_UsuarioAlias" />
+            <PropertyRef Name="usu_EsAdmin" />
+          </Key>
+          <Property Name="usu_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usu_Nambe" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="usu_Apellido" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="usu_UsuarioAlias" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="usu_EsAdmin" Type="varchar" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbUsuarios_usuCrea">
+          <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="1" />
+          <End Role="tbUsuarios1" Type="Self.tbUsuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbUsuarios">
+              <PropertyRef Name="usu_Id" />
+            </Principal>
+            <Dependent Role="tbUsuarios1">
+              <PropertyRef Name="usu_UsuCrea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbUsuarios_usuModif">
+          <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="0..1" />
+          <End Role="tbUsuarios1" Type="Self.tbUsuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbUsuarios">
+              <PropertyRef Name="usu_Id" />
+            </Principal>
+            <Dependent Role="tbUsuarios1">
+              <PropertyRef Name="usu_UsuModif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="UDP_EDITAR_USUARIOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usu_Id" Type="int" Mode="In" />
+          <Parameter Name="usu_Nambe" Type="nvarchar" Mode="In" />
+          <Parameter Name="usu_Apellido" Type="nvarchar" Mode="In" />
+          <Parameter Name="usu_UsuarioAlias" Type="nvarchar" Mode="In" />
+          <Parameter Name="usu_EsAdmin" Type="bit" Mode="In" />
+          <Parameter Name="usu_UsuModif" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UDP_ELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usu_Id" Type="int" Mode="In" />
+          <Parameter Name="usu_Modi" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UDP_USUARIOS_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usu_Nambe" Type="nvarchar" Mode="In" />
+          <Parameter Name="usu_Apellido" Type="nvarchar" Mode="In" />
+          <Parameter Name="usu_UsuarioAlias" Type="nvarchar" Mode="In" />
+          <Parameter Name="usu_Contra" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="usu_EsAdmin" Type="bit" Mode="In" />
+          <Parameter Name="usu_UsuCrea" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UDP_VALIDAR_LOGIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usu_Alias" Type="nvarchar" Mode="In" />
+          <Parameter Name="usu_Contra" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="DB_USUARIOSModelStoreContainer">
+          <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_USARIOS_INDEX" EntityType="Self.V_USARIOS_INDEX" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_USARIOS_INDEX].[usu_Id] AS [usu_Id], 
+    [V_USARIOS_INDEX].[usu_Nambe] AS [usu_Nambe], 
+    [V_USARIOS_INDEX].[usu_Apellido] AS [usu_Apellido], 
+    [V_USARIOS_INDEX].[usu_UsuarioAlias] AS [usu_UsuarioAlias], 
+    [V_USARIOS_INDEX].[usu_EsAdmin] AS [usu_EsAdmin]
+    FROM [dbo].[V_USARIOS_INDEX] AS [V_USARIOS_INDEX]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tbUsuarios_usuCrea" Association="Self.FK_tbUsuarios_usuCrea">
+            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+            <End Role="tbUsuarios1" EntitySet="tbUsuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbUsuarios_usuModif" Association="Self.FK_tbUsuarios_usuModif">
+            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+            <End Role="tbUsuarios1" EntitySet="tbUsuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_USUARIOSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbUsuarios">
+          <Key>
+            <PropertyRef Name="usu_Id" />
+          </Key>
+          <Property Name="usu_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usu_Nambe" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usu_Apellido" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usu_UsuarioAlias" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usu_Contra" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usu_EsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="usu_UsuCrea" Type="Int32" Nullable="false" />
+          <Property Name="usu_FechaCrea" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usu_UsuModif" Type="Int32" />
+          <Property Name="usu_FechaModif" Type="DateTime" Precision="3" />
+          <Property Name="usu_Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbUsuarios1" Relationship="Self.FK_tbUsuarios_usuCrea" FromRole="tbUsuarios" ToRole="tbUsuarios1" />
+          <NavigationProperty Name="tbUsuarios2" Relationship="Self.FK_tbUsuarios_usuCrea" FromRole="tbUsuarios1" ToRole="tbUsuarios" />
+          <NavigationProperty Name="tbUsuarios11" Relationship="Self.FK_tbUsuarios_usuModif" FromRole="tbUsuarios" ToRole="tbUsuarios1" />
+          <NavigationProperty Name="tbUsuarios3" Relationship="Self.FK_tbUsuarios_usuModif" FromRole="tbUsuarios1" ToRole="tbUsuarios" />
+        </EntityType>
+        <EntityType Name="V_USARIOS_INDEX">
+          <Key>
+            <PropertyRef Name="usu_Id" />
+            <PropertyRef Name="usu_Nambe" />
+            <PropertyRef Name="usu_Apellido" />
+            <PropertyRef Name="usu_UsuarioAlias" />
+            <PropertyRef Name="usu_EsAdmin" />
+          </Key>
+          <Property Name="usu_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usu_Nambe" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usu_Apellido" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usu_UsuarioAlias" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usu_EsAdmin" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbUsuarios_usuCrea">
+          <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="1" />
+          <End Role="tbUsuarios1" Type="Self.tbUsuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbUsuarios">
+              <PropertyRef Name="usu_Id" />
+            </Principal>
+            <Dependent Role="tbUsuarios1">
+              <PropertyRef Name="usu_UsuCrea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbUsuarios_usuModif">
+          <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="0..1" />
+          <End Role="tbUsuarios1" Type="Self.tbUsuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbUsuarios">
+              <PropertyRef Name="usu_Id" />
+            </Principal>
+            <Dependent Role="tbUsuarios1">
+              <PropertyRef Name="usu_UsuModif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_USUARIOSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" />
+          <EntitySet Name="V_USARIOS_INDEX" EntityType="Self.V_USARIOS_INDEX" />
+          <AssociationSet Name="FK_tbUsuarios_usuCrea" Association="Self.FK_tbUsuarios_usuCrea">
+            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+            <End Role="tbUsuarios1" EntitySet="tbUsuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbUsuarios_usuModif" Association="Self.FK_tbUsuarios_usuModif">
+            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+            <End Role="tbUsuarios1" EntitySet="tbUsuarios" />
+          </AssociationSet>
+          <FunctionImport Name="UDP_USUARIOS_INSERT">
+            <Parameter Name="usu_Nambe" Mode="In" Type="String" />
+            <Parameter Name="usu_Apellido" Mode="In" Type="String" />
+            <Parameter Name="usu_UsuarioAlias" Mode="In" Type="String" />
+            <Parameter Name="usu_Contra" Mode="In" Type="String" />
+            <Parameter Name="usu_EsAdmin" Mode="In" Type="Boolean" />
+            <Parameter Name="usu_UsuCrea" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_VALIDAR_LOGIN" ReturnType="Collection(DB_USUARIOSModel.UDP_VALIDAR_LOGIN_Result)">
+            <Parameter Name="usu_Alias" Mode="In" Type="String" />
+            <Parameter Name="usu_Contra" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_ObtenerDatos" ReturnType="Collection(DB_USUARIOSModel.UDP_ObtenerDatos_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_EDITAR_USUARIOS">
+            <Parameter Name="usu_Id" Mode="In" Type="Int32" />
+            <Parameter Name="usu_Nambe" Mode="In" Type="String" />
+            <Parameter Name="usu_Apellido" Mode="In" Type="String" />
+            <Parameter Name="usu_UsuarioAlias" Mode="In" Type="String" />
+            <Parameter Name="usu_EsAdmin" Mode="In" Type="Boolean" />
+            <Parameter Name="usu_UsuModif" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_ELIMINAR">
+            <Parameter Name="usu_Id" Mode="In" Type="Int32" />
+            <Parameter Name="usu_Modi" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="UDP_VALIDAR_LOGIN_Result">
+          <Property Type="Int32" Name="usu_Id" Nullable="false" />
+          <Property Type="String" Name="usu_UsuarioAlias" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="usu_Contra" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UDP_ObtenerDatos_Result">
+          <Property Type="Int32" Name="usu_Id" Nullable="false" />
+          <Property Type="String" Name="usu_Nambe" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="usu_Apellido" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="usu_UsuarioAlias" Nullable="false" MaxLength="150" />
+          <Property Type="Boolean" Name="usu_EsAdmin" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_USUARIOSModelStoreContainer" CdmEntityContainer="DB_USUARIOSEntities">
+          <EntitySetMapping Name="tbUsuarios">
+            <EntityTypeMapping TypeName="DB_USUARIOSModel.tbUsuarios">
+              <MappingFragment StoreEntitySet="tbUsuarios">
+                <ScalarProperty Name="usu_Id" ColumnName="usu_Id" />
+                <ScalarProperty Name="usu_Nambe" ColumnName="usu_Nambe" />
+                <ScalarProperty Name="usu_Apellido" ColumnName="usu_Apellido" />
+                <ScalarProperty Name="usu_UsuarioAlias" ColumnName="usu_UsuarioAlias" />
+                <ScalarProperty Name="usu_Contra" ColumnName="usu_Contra" />
+                <ScalarProperty Name="usu_EsAdmin" ColumnName="usu_EsAdmin" />
+                <ScalarProperty Name="usu_UsuCrea" ColumnName="usu_UsuCrea" />
+                <ScalarProperty Name="usu_FechaCrea" ColumnName="usu_FechaCrea" />
+                <ScalarProperty Name="usu_UsuModif" ColumnName="usu_UsuModif" />
+                <ScalarProperty Name="usu_FechaModif" ColumnName="usu_FechaModif" />
+                <ScalarProperty Name="usu_Estado" ColumnName="usu_Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_USARIOS_INDEX">
+            <EntityTypeMapping TypeName="DB_USUARIOSModel.V_USARIOS_INDEX">
+              <MappingFragment StoreEntitySet="V_USARIOS_INDEX">
+                <ScalarProperty Name="usu_Id" ColumnName="usu_Id" />
+                <ScalarProperty Name="usu_Nambe" ColumnName="usu_Nambe" />
+                <ScalarProperty Name="usu_Apellido" ColumnName="usu_Apellido" />
+                <ScalarProperty Name="usu_UsuarioAlias" ColumnName="usu_UsuarioAlias" />
+                <ScalarProperty Name="usu_EsAdmin" ColumnName="usu_EsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UDP_USUARIOS_INSERT" FunctionName="DB_USUARIOSModel.Store.UDP_USUARIOS_INSERT" />
+          <FunctionImportMapping FunctionImportName="UDP_VALIDAR_LOGIN" FunctionName="DB_USUARIOSModel.Store.UDP_VALIDAR_LOGIN">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_USUARIOSModel.UDP_VALIDAR_LOGIN_Result">
+                <ScalarProperty Name="usu_Id" ColumnName="usu_Id" />
+                <ScalarProperty Name="usu_UsuarioAlias" ColumnName="usu_UsuarioAlias" />
+                <ScalarProperty Name="usu_Contra" ColumnName="usu_Contra" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_EDITAR_USUARIOS" FunctionName="DB_USUARIOSModel.Store.UDP_EDITAR_USUARIOS" />
+          <FunctionImportMapping FunctionImportName="UDP_ELIMINAR" FunctionName="DB_USUARIOSModel.Store.UDP_ELIMINAR" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

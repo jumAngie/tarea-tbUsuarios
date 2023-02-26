@@ -1,0 +1,126 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @model Tarea_CRUDTbUsuarios.Models.tbUsuarios
+
+                @{
+                    ViewBag.Title = "Delete";
+                    Layout = null;
+                }
+
+                <h2>Borrar</h2>
+
+                <h3>¿Está seguro que quiere eliminar este registro?</h3>
+                <div>
+                    <h4>tbUsuarios</h4>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_Nambe)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_Nambe)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_Apellido)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_Apellido)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_UsuarioAlias)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_UsuarioAlias)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_Contra)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_Contra)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_EsAdmin)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_EsAdmin)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_FechaCrea)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_FechaCrea)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_FechaModif)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_FechaModif)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.usu_Estado)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.usu_Estado)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.tbUsuarios2.usu_Nambe)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.tbUsuarios2.usu_Nambe)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.tbUsuarios3.usu_Nambe)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.tbUsuarios3.usu_Nambe)
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-default" /> |
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
